@@ -9,8 +9,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <link rel="icon" type="image/x-icon" href="starkbase-tab-icon.png">
-
   <link
     href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
     rel="stylesheet"
@@ -18,22 +16,25 @@
 
   <style>
     :root {
-      --bg: #080808;
-      --surface: #0e0e0e;
-      --surface-2: #121212;
-      --surface-3: #171717;
+      --bg: #f4f3ed;
+      --paper: #faf9f5;
+      --paper-2: #efeee7;
+      --white: #ffffff;
 
-      --text: #f5f5f0;
-      --muted: #858580;
-      --muted-2: #575752;
+      --ink: #151515;
+      --ink-soft: #343431;
 
-      --line: rgba(255,255,255,.10);
-      --line-soft: rgba(255,255,255,.055);
+      --muted: #777770;
+      --muted-2: #a4a49d;
 
-      --accent: #d9ff63;
-      --accent-soft: rgba(217,255,99,.10);
+      --line: rgba(20,20,20,.12);
+      --line-soft: rgba(20,20,20,.07);
 
-      --radius: 0px;
+      --accent: #b9e84f;
+      --accent-dark: #91bc29;
+
+      --shadow:
+        0 20px 60px rgba(20,20,20,.06);
     }
 
     * {
@@ -48,7 +49,7 @@
 
     body {
       background: var(--bg);
-      color: var(--text);
+      color: var(--ink);
       font-family: "Plus Jakarta Sans", sans-serif;
       overflow-x: hidden;
     }
@@ -58,10 +59,12 @@
       position: fixed;
       inset: 0;
       pointer-events: none;
-      z-index: 50;
+      z-index: 100;
+
       opacity: .025;
+
       background-image:
-        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='.8'/%3E%3C/svg%3E");
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='.7'/%3E%3C/svg%3E");
     }
 
     a {
@@ -69,18 +72,14 @@
       text-decoration: none;
     }
 
-    button {
-      font: inherit;
-    }
-
     .page {
       width: min(1440px, calc(100% - 48px));
-      margin: 0 auto;
+      margin: auto;
     }
 
-    /* =========================
+    /* ========================================
        CUT CORNER
-    ========================= */
+    ======================================== */
 
     .cut {
       clip-path: polygon(
@@ -93,119 +92,160 @@
       );
     }
 
-    /* =========================
+    /* ========================================
        HEADER
-    ========================= */
+    ======================================== */
 
     .topbar {
-      height: 92px;
+      height: 94px;
+
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       border-bottom: 1px solid var(--line-soft);
     }
 
     .brand {
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 13px;
+      gap: 12px;
     }
 
-    .brand img {
-      width: 112px;
-      display: block;
+    .brand-name {
+      font-family: "Comfortaa", sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -.07em;
     }
 
-    .brand-mark {
-      width: 6px;
-      height: 6px;
+    .brand-dot {
+      width: 7px;
+      height: 7px;
+
       background: var(--accent);
+
       transform: rotate(45deg);
+
+      box-shadow:
+        0 0 0 4px rgba(185,232,79,.12);
     }
 
-    .nav-right {
+    .nav {
       display: flex;
       align-items: center;
-      gap: 28px;
-      color: var(--muted);
+      gap: 30px;
+
       font-size: 10px;
+      font-weight: 600;
+
       text-transform: uppercase;
       letter-spacing: .16em;
+
+      color: var(--muted);
     }
 
-    .nav-right a {
-      transition: color .25s ease;
+    .nav a {
+      transition:
+        color .25s ease;
     }
 
-    .nav-right a:hover {
-      color: var(--text);
+    .nav a:hover {
+      color: var(--ink);
     }
 
-    .status {
+    .availability {
       display: flex;
       align-items: center;
       gap: 8px;
-      color: var(--text);
+
+      color: var(--ink);
     }
 
-    .status-dot {
+    .availability-dot {
       width: 6px;
       height: 6px;
+
       border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 15px var(--accent);
+
+      background: var(--accent-dark);
     }
 
-    /* =========================
+    /* ========================================
        HERO
-    ========================= */
+    ======================================== */
 
     .hero {
-      min-height: 600px;
+      min-height: 620px;
+
       display: flex;
       flex-direction: column;
       justify-content: center;
-      border-bottom: 1px solid var(--line-soft);
+
       position: relative;
+
+      border-bottom: 1px solid var(--line-soft);
     }
 
-    .hero::after {
-      content: "";
+    .hero-orb {
       position: absolute;
-      width: 300px;
-      height: 300px;
-      right: 5%;
-      top: 30%;
-      background: var(--accent-soft);
-      filter: blur(100px);
+
+      width: 420px;
+      height: 420px;
+
+      right: 3%;
+      top: 18%;
+
+      border-radius: 50%;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(185,232,79,.22),
+          rgba(185,232,79,.04) 50%,
+          transparent 70%
+        );
+
+      filter: blur(5px);
+
       pointer-events: none;
-      opacity: .35;
     }
 
     .eyebrow {
       display: flex;
       align-items: center;
       gap: 12px;
-      color: var(--muted);
-      font-size: 10px;
-      letter-spacing: .22em;
-      text-transform: uppercase;
+
       margin-bottom: 30px;
+
+      color: var(--muted);
+
+      font-size: 10px;
+      font-weight: 600;
+
+      text-transform: uppercase;
+      letter-spacing: .21em;
     }
 
     .eyebrow-line {
       width: 42px;
       height: 1px;
+
       background: var(--muted-2);
     }
 
     .hero h1 {
       position: relative;
       z-index: 2;
+
       max-width: 1200px;
-      font-size: clamp(62px, 9.3vw, 145px);
+
+      font-size: clamp(62px, 9.5vw, 146px);
+
       line-height: .84;
-      letter-spacing: -.085em;
+
+      letter-spacing: -.09em;
+
       font-weight: 700;
     }
 
@@ -216,68 +256,88 @@
     .hero-bottom {
       position: relative;
       z-index: 2;
+
       margin-top: 58px;
+
       display: flex;
-      justify-content: space-between;
       align-items: flex-end;
+      justify-content: space-between;
+
       gap: 40px;
     }
 
     .hero-copy {
       max-width: 520px;
+
       color: var(--muted);
+
       font-size: 13px;
       line-height: 1.85;
     }
 
     .hero-index {
-      font-family: "Comfortaa", sans-serif;
       color: var(--muted-2);
-      font-size: 11px;
+
+      font-family: "Comfortaa", sans-serif;
+
+      font-size: 10px;
+
       letter-spacing: .15em;
     }
 
-    /* =========================
-       SECTIONS
-    ========================= */
+    /* ========================================
+       SECTION
+    ======================================== */
 
     .section {
       padding: 125px 0;
+
       border-bottom: 1px solid var(--line-soft);
     }
 
     .section-head {
       display: flex;
-      justify-content: space-between;
       align-items: flex-end;
-      gap: 30px;
+      justify-content: space-between;
+
+      gap: 40px;
+
       margin-bottom: 58px;
     }
 
     .section-kicker {
-      color: var(--accent);
+      margin-bottom: 15px;
+
+      color: var(--accent-dark);
+
       font-size: 10px;
+      font-weight: 700;
+
       text-transform: uppercase;
       letter-spacing: .2em;
-      margin-bottom: 15px;
     }
 
     .section-title {
-      font-size: clamp(40px, 5vw, 70px);
+      font-size: clamp(40px, 5vw, 72px);
+
       line-height: .92;
-      letter-spacing: -.065em;
+
+      letter-spacing: -.07em;
     }
 
     .section-description {
-      max-width: 340px;
+      max-width: 350px;
+
       color: var(--muted);
+
       font-size: 12px;
+
       line-height: 1.8;
     }
 
-    /* =========================
-       PROJECT LIST
-    ========================= */
+    /* ========================================
+       PROJECTS
+    ======================================== */
 
     .project-list {
       border-top: 1px solid var(--line);
@@ -285,15 +345,25 @@
 
     .project {
       min-height: 155px;
+
       display: grid;
-      grid-template-columns: 70px 1fr 230px 70px;
+
+      grid-template-columns:
+        70px
+        minmax(0, 1fr)
+        230px
+        70px;
+
       align-items: center;
+
       gap: 25px;
 
       padding: 28px 20px;
 
       border-bottom: 1px solid var(--line);
+
       position: relative;
+
       overflow: hidden;
 
       transition:
@@ -303,38 +373,50 @@
 
     .project::before {
       content: "";
+
       position: absolute;
+
       left: 0;
       top: 0;
       bottom: 0;
+
       width: 3px;
-      background: var(--accent);
+
+      background: var(--accent-dark);
 
       transform: scaleY(0);
+
       transform-origin: bottom;
 
-      transition: transform .4s ease;
+      transition:
+        transform .4s ease;
     }
 
     .project::after {
       content: "";
+
       position: absolute;
+
       inset: 0;
+
       pointer-events: none;
 
       background:
         radial-gradient(
           circle at 80% 50%,
-          rgba(217,255,99,.08),
-          transparent 28%
+          rgba(185,232,79,.13),
+          transparent 27%
         );
 
       opacity: 0;
-      transition: opacity .4s ease;
+
+      transition:
+        opacity .4s ease;
     }
 
     .project:hover {
-      background: var(--surface);
+      background: var(--paper);
+
       padding-left: 36px;
     }
 
@@ -356,16 +438,23 @@
 
     .project-number {
       color: var(--muted-2);
+
       font-family: "Comfortaa", sans-serif;
-      font-size: 11px;
+
+      font-size: 10px;
     }
 
     .project-title {
-      font-size: clamp(22px, 3vw, 37px);
-      letter-spacing: -.045em;
-      font-weight: 600;
       margin-bottom: 8px;
-      transition: transform .35s ease;
+
+      font-size: clamp(22px, 3vw, 37px);
+
+      font-weight: 600;
+
+      letter-spacing: -.05em;
+
+      transition:
+        transform .35s ease;
     }
 
     .project:hover .project-title {
@@ -374,14 +463,21 @@
 
     .project-meta {
       color: var(--muted);
+
       font-size: 9px;
+
+      font-weight: 600;
+
       text-transform: uppercase;
+
       letter-spacing: .15em;
     }
 
     .project-type {
       color: var(--muted);
+
       font-size: 11px;
+
       line-height: 1.7;
     }
 
@@ -394,192 +490,252 @@
 
       border: 1px solid var(--line);
 
+      background: rgba(255,255,255,.35);
+
       transition:
         background .35s ease,
         color .35s ease,
-        border-color .35s ease;
+        border-color .35s ease,
+        transform .35s ease;
     }
 
     .project-arrow svg {
       width: 16px;
-      transition: transform .35s ease;
+
+      transition:
+        transform .35s ease;
     }
 
     .project:hover .project-arrow {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #080808;
+      background: var(--ink);
+
+      border-color: var(--ink);
+
+      color: white;
+
+      transform: rotate(-2deg);
     }
 
     .project:hover .project-arrow svg {
-      transform: translate(4px, -4px);
+      transform: translate(4px,-4px);
     }
 
-    /* =========================
-       LONG TERM WORK
-    ========================= */
+    /* ========================================
+       LONG TERM
+    ======================================== */
 
     .featured-wrap {
       display: grid;
-      grid-template-columns: 1.4fr .6fr;
+
+      grid-template-columns:
+        minmax(0, 1.42fr)
+        minmax(350px, .58fr);
+
       gap: 18px;
     }
 
-    /* MAIN FEATURE */
+    /* ========================================
+       FEATURED CARD
+    ======================================== */
 
     .featured-main {
       min-height: 510px;
+
       padding: 40px;
 
       position: relative;
+
       overflow: hidden;
 
       background:
         radial-gradient(
-          circle at 80% 75%,
-          rgba(217,255,99,.12),
-          transparent 30%
+          circle at 78% 72%,
+          rgba(185,232,79,.17),
+          transparent 28%
         ),
-        var(--surface);
+        var(--paper);
 
       border: 1px solid var(--line);
+
+      box-shadow: var(--shadow);
+
+      transition:
+        transform .5s ease,
+        box-shadow .5s ease;
+    }
+
+    .featured-main:hover {
+      transform: translateY(-5px);
+
+      box-shadow:
+        0 30px 80px rgba(20,20,20,.09);
     }
 
     .featured-main::after {
       content: "01";
 
       position: absolute;
-      right: -20px;
-      bottom: -75px;
 
-      font-size: 260px;
+      right: -15px;
+      bottom: -78px;
+
+      font-size: 280px;
+
       line-height: 1;
 
       font-weight: 800;
+
       letter-spacing: -.1em;
 
-      color: rgba(255,255,255,.025);
+      color: rgba(20,20,20,.035);
 
       transition:
-        transform .6s ease,
-        color .6s ease;
+        transform .6s ease;
     }
 
     .featured-main:hover::after {
-      transform: translate(-15px,-15px);
-      color: rgba(217,255,99,.04);
+      transform: translate(-15px,-12px);
     }
 
     .featured-label {
       position: relative;
-      z-index: 2;
+      z-index: 3;
 
       display: inline-flex;
       align-items: center;
+
       gap: 10px;
 
-      color: var(--accent);
+      color: var(--accent-dark);
 
       font-size: 9px;
+      font-weight: 700;
+
       text-transform: uppercase;
+
       letter-spacing: .18em;
     }
 
     .featured-label::before {
       content: "";
+
       width: 6px;
       height: 6px;
 
-      background: var(--accent);
+      background: var(--accent-dark);
+
       transform: rotate(45deg);
     }
 
     .featured-content {
       position: absolute;
+
+      z-index: 3;
+
       left: 40px;
       right: 40px;
       bottom: 40px;
-      z-index: 3;
     }
 
     .featured-content h3 {
-      font-size: clamp(43px, 5.4vw, 76px);
+      margin-bottom: 24px;
+
+      font-size: clamp(43px, 5.5vw, 78px);
+
       line-height: .88;
+
       letter-spacing: -.075em;
-      margin-bottom: 23px;
     }
 
     .featured-content p {
-      max-width: 580px;
+      max-width: 590px;
 
       color: var(--muted);
+
       font-size: 12px;
+
       line-height: 1.8;
     }
 
     .featured-url {
       display: inline-flex;
+
       align-items: center;
+
       gap: 12px;
 
       margin-top: 28px;
+
       padding-bottom: 9px;
 
       border-bottom: 1px solid var(--line);
 
+      color: var(--ink);
+
       font-family: "Comfortaa", sans-serif;
+
       font-size: 10px;
 
       transition:
-        border-color .3s ease,
-        color .3s ease;
+        color .3s ease,
+        border-color .3s ease;
     }
 
     .featured-url:hover {
-      color: var(--accent);
-      border-color: var(--accent);
+      color: var(--accent-dark);
+
+      border-color: var(--accent-dark);
     }
 
-    /* =========================
-       MORE VENTURES CARD
-    ========================= */
+    /* ========================================
+       VENTURES CARD
+    ======================================== */
 
     .ventures-card {
       min-height: 510px;
+
       position: relative;
+
       overflow: hidden;
 
-      background: #0b0b0b;
+      background: var(--ink);
 
-      border: 1px solid var(--line);
+      color: white;
 
-      display: flex;
-      flex-direction: column;
+      border: 1px solid var(--ink);
+
+      box-shadow:
+        0 25px 70px rgba(20,20,20,.10);
 
       transition:
-        background .4s ease,
-        border-color .4s ease;
+        transform .5s ease;
+    }
+
+    .ventures-card:hover {
+      transform: translateY(-5px);
     }
 
     .ventures-card::before {
       content: "";
 
       position: absolute;
-      width: 260px;
-      height: 260px;
 
-      right: -130px;
-      top: -130px;
+      width: 300px;
+      height: 300px;
+
+      right: -160px;
+      top: -160px;
 
       border-radius: 50%;
 
-      border: 1px solid rgba(217,255,99,.13);
+      border: 1px solid rgba(185,232,79,.2);
 
-      transition: transform .6s ease;
+      transition:
+        transform .7s ease;
     }
 
     .ventures-card:hover::before {
-      transform: scale(1.25);
+      transform: scale(1.3);
     }
 
     .ventures-card::after {
@@ -588,91 +744,118 @@
       position: absolute;
 
       right: -10px;
-      bottom: -65px;
+      bottom: -70px;
 
-      font-size: 230px;
+      font-size: 250px;
+
       line-height: 1;
 
       font-weight: 800;
+
       letter-spacing: -.1em;
 
-      color: rgba(255,255,255,.025);
+      color: rgba(255,255,255,.035);
 
       pointer-events: none;
     }
 
     .ventures-top {
-      padding: 30px 30px 0;
-
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
       position: relative;
       z-index: 3;
+
+      padding: 30px;
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: flex-start;
+    }
+
+    .ventures-top .section-kicker {
+      color: var(--accent);
     }
 
     .ventures-title {
-      font-size: 18px;
-      letter-spacing: -.035em;
+      font-size: 19px;
+
+      font-weight: 600;
+
+      letter-spacing: -.04em;
     }
 
     .ventures-count {
-      color: var(--muted-2);
+      color: rgba(255,255,255,.35);
 
       font-family: "Comfortaa", sans-serif;
+
       font-size: 9px;
-      letter-spacing: .15em;
+
+      letter-spacing: .13em;
     }
 
-    /* VENTURE ITEMS */
+    /* ========================================
+       VENTURE ITEM
+    ======================================== */
 
     .venture-list {
-      margin-top: auto;
-      position: relative;
-      z-index: 3;
+      position: absolute;
+
+      left: 0;
+      right: 0;
+      bottom: 0;
+
+      z-index: 4;
     }
 
     .venture {
-      min-height: 126px;
+      min-height: 135px;
 
       padding: 23px 30px;
 
       display: flex;
+
       align-items: center;
+
       justify-content: space-between;
 
-      border-top: 1px solid var(--line);
+      gap: 20px;
 
       position: relative;
+
       overflow: hidden;
 
+      border-top: 1px solid rgba(255,255,255,.12);
+
       transition:
-        background .35s ease,
-        padding .35s ease;
+        background .4s ease,
+        padding .4s ease;
     }
 
     .venture::before {
       content: "";
 
       position: absolute;
+
       inset: 0;
 
       background:
         linear-gradient(
           90deg,
-          rgba(217,255,99,.08),
-          transparent 75%
+          rgba(185,232,79,.13),
+          transparent 80%
         );
 
       transform: translateX(-100%);
 
-      transition: transform .45s ease;
+      transition:
+        transform .5s ease;
     }
 
     .venture:hover {
-      background: var(--surface-2);
-      padding-left: 38px;
+      background: rgba(255,255,255,.045);
+
+      padding-left: 40px;
     }
 
     .venture:hover::before {
@@ -685,20 +868,24 @@
     }
 
     .venture-number {
-      color: var(--muted-2);
+      margin-bottom: 9px;
+
+      color: rgba(255,255,255,.35);
 
       font-family: "Comfortaa", sans-serif;
-      font-size: 9px;
 
-      margin-bottom: 9px;
+      font-size: 9px;
     }
 
     .venture-name {
       font-size: 20px;
-      letter-spacing: -.045em;
+
       font-weight: 600;
 
-      transition: transform .35s ease;
+      letter-spacing: -.045em;
+
+      transition:
+        transform .35s ease;
     }
 
     .venture:hover .venture-name {
@@ -708,10 +895,12 @@
     .venture-category {
       margin-top: 7px;
 
-      color: var(--muted);
+      color: rgba(255,255,255,.43);
 
       font-size: 8px;
+
       text-transform: uppercase;
+
       letter-spacing: .15em;
     }
 
@@ -719,106 +908,17 @@
       position: relative;
       z-index: 2;
 
-      width: 39px;
-      height: 39px;
+      width: 40px;
+      height: 40px;
 
       display: grid;
       place-items: center;
 
-      border: 1px solid var(--line);
+      flex-shrink: 0;
 
-      color: var(--muted);
+      border: 1px solid rgba(255,255,255,.16);
 
-      transition:
-        background .3s ease,
-        color .3s ease,
-        border-color .3s ease;
-    }
-
-    .venture-arrow svg {
-      width: 14px;
-      transition: transform .3s ease;
-    }
-
-    .venture:hover .venture-arrow {
-      background: var(--accent);
-      color: #080808;
-      border-color: var(--accent);
-    }
-
-    .venture:hover .venture-arrow svg {
-      transform: translate(3px,-3px);
-    }
-
-    /* =========================
-       MANIFESTO
-    ========================= */
-
-    .manifesto {
-      min-height: 540px;
-
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .manifesto h2 {
-      max-width: 1150px;
-
-      font-size: clamp(43px, 6vw, 88px);
-      line-height: .94;
-      letter-spacing: -.07em;
-    }
-
-    .manifesto h2 em {
-      font-family: "Comfortaa", sans-serif;
-      font-style: normal;
-      font-weight: 500;
-      color: var(--accent);
-    }
-
-    /* =========================
-       FOOTER
-    ========================= */
-
-    .footer {
-      padding: 65px 0 45px;
-    }
-
-    .footer-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 30px;
-    }
-
-    .footer-brand img {
-      width: 125px;
-      display: block;
-      margin-bottom: 20px;
-    }
-
-    .footer-brand p {
-      max-width: 280px;
-
-      color: var(--muted);
-
-      font-size: 11px;
-      line-height: 1.8;
-    }
-
-    .footer-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-
-      padding: 14px 18px;
-
-      border: 1px solid var(--line);
-
-      font-size: 9px;
-      text-transform: uppercase;
-      letter-spacing: .15em;
+      color: rgba(255,255,255,.55);
 
       transition:
         background .3s ease,
@@ -826,10 +926,136 @@
         color .3s ease;
     }
 
-    .footer-link:hover {
+    .venture-arrow svg {
+      width: 14px;
+
+      transition:
+        transform .3s ease;
+    }
+
+    .venture:hover .venture-arrow {
       background: var(--accent);
-      color: #080808;
+
       border-color: var(--accent);
+
+      color: var(--ink);
+    }
+
+    .venture:hover .venture-arrow svg {
+      transform: translate(3px,-3px);
+    }
+
+    /* ========================================
+       MANIFESTO
+    ======================================== */
+
+    .manifesto {
+      min-height: 550px;
+
+      display: flex;
+
+      flex-direction: column;
+
+      justify-content: center;
+    }
+
+    .manifesto h2 {
+      max-width: 1160px;
+
+      font-size: clamp(43px, 6.2vw, 90px);
+
+      line-height: .94;
+
+      letter-spacing: -.075em;
+    }
+
+    .manifesto h2 em {
+      font-family: "Comfortaa", sans-serif;
+
+      font-style: normal;
+
+      font-weight: 500;
+
+      color: var(--accent-dark);
+    }
+
+    /* ========================================
+       FOOTER
+    ======================================== */
+
+    .footer {
+      padding: 65px 0 45px;
+    }
+
+    .footer-top {
+      display: flex;
+
+      align-items: flex-start;
+
+      justify-content: space-between;
+
+      gap: 30px;
+    }
+
+    .footer-brand {
+      display: flex;
+
+      flex-direction: column;
+    }
+
+    .footer-logo {
+      margin-bottom: 20px;
+
+      font-family: "Comfortaa", sans-serif;
+
+      font-size: 25px;
+
+      font-weight: 700;
+
+      letter-spacing: -.07em;
+    }
+
+    .footer-brand p {
+      max-width: 290px;
+
+      color: var(--muted);
+
+      font-size: 11px;
+
+      line-height: 1.8;
+    }
+
+    .footer-link {
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 12px;
+
+      padding: 15px 19px;
+
+      border: 1px solid var(--line);
+
+      font-size: 9px;
+
+      font-weight: 700;
+
+      text-transform: uppercase;
+
+      letter-spacing: .15em;
+
+      transition:
+        background .3s ease,
+        color .3s ease,
+        border-color .3s ease;
+    }
+
+    .footer-link:hover {
+      background: var(--ink);
+
+      border-color: var(--ink);
+
+      color: white;
     }
 
     .footer-bottom {
@@ -837,21 +1063,26 @@
 
       padding-top: 20px;
 
-      border-top: 1px solid var(--line-soft);
-
       display: flex;
+
+      align-items: center;
+
       justify-content: space-between;
+
+      border-top: 1px solid var(--line-soft);
 
       color: var(--muted-2);
 
       font-size: 9px;
+
       text-transform: uppercase;
+
       letter-spacing: .15em;
     }
 
-    /* =========================
+    /* ========================================
        RESPONSIVE
-    ========================= */
+    ======================================== */
 
     @media (max-width: 900px) {
 
@@ -859,7 +1090,7 @@
         width: min(100% - 30px, 1440px);
       }
 
-      .nav-right a:not(.status) {
+      .nav a:not(.availability) {
         display: none;
       }
 
@@ -869,6 +1100,7 @@
 
       .hero-bottom {
         flex-direction: column;
+
         align-items: flex-start;
       }
 
@@ -878,12 +1110,18 @@
 
       .section-head {
         flex-direction: column;
+
         align-items: flex-start;
       }
 
       .project {
-        grid-template-columns: 45px 1fr 50px;
+        grid-template-columns:
+          45px
+          minmax(0,1fr)
+          50px;
+
         min-height: 130px;
+
         gap: 12px;
       }
 
@@ -908,11 +1146,11 @@
     @media (max-width: 560px) {
 
       .topbar {
-        height: 76px;
+        height: 78px;
       }
 
-      .brand img {
-        width: 95px;
+      .brand-name {
+        font-size: 21px;
       }
 
       .hero h1 {
@@ -927,12 +1165,12 @@
         padding: 23px 10px;
       }
 
-      .project-title {
-        font-size: 21px;
-      }
-
       .project:hover {
         padding-left: 19px;
+      }
+
+      .project-title {
+        font-size: 21px;
       }
 
       .project-arrow {
@@ -941,13 +1179,16 @@
       }
 
       .featured-main {
-        min-height: 450px;
+        min-height: 455px;
+
         padding: 27px;
       }
 
       .featured-content {
         left: 27px;
+
         right: 27px;
+
         bottom: 28px;
       }
 
@@ -964,8 +1205,9 @@
       }
 
       .venture {
-        padding: 21px 22px;
         min-height: 115px;
+
+        padding: 21px 22px;
       }
 
       .venture:hover {
@@ -986,6 +1228,9 @@
 
       .footer-bottom {
         flex-direction: column;
+
+        align-items: flex-start;
+
         gap: 12px;
       }
     }
@@ -997,26 +1242,44 @@
 
   <main class="page">
 
-    <!-- HEADER -->
+
+    <!-- =====================================
+         HEADER
+    ====================================== -->
 
     <header class="topbar">
 
       <a href="#" class="brand">
-        <img src="starkbase-logo.png" alt="Starkbase">
-        <span class="brand-mark"></span>
+
+        <span class="brand-name">
+          Starkbase
+        </span>
+
+        <span class="brand-dot"></span>
+
       </a>
 
-      <nav class="nav-right">
 
-        <a href="#work">Work</a>
+      <nav class="nav">
 
-        <a href="#ventures">Ventures</a>
+        <a href="#work">
+          Work
+        </a>
 
-        <a href="#contact">Contact</a>
+        <a href="#ventures">
+          Ventures
+        </a>
 
-        <span class="status">
-          <span class="status-dot"></span>
+        <a href="#contact">
+          Contact
+        </a>
+
+        <span class="availability">
+
+          <span class="availability-dot"></span>
+
           Available
+
         </span>
 
       </nav>
@@ -1024,30 +1287,48 @@
     </header>
 
 
-    <!-- HERO -->
+    <!-- =====================================
+         HERO
+    ====================================== -->
 
     <section class="hero">
 
+      <div class="hero-orb"></div>
+
+
       <div class="eyebrow">
+
         <span class="eyebrow-line"></span>
+
         Starkbase / Selected Work
+
       </div>
 
+
       <h1>
+
         Proof of <span>work.</span><br>
+
         Built to matter.
+
       </h1>
+
 
       <div class="hero-bottom">
 
         <p class="hero-copy">
+
           A selection of digital products, ventures and experiences
           designed and engineered by Starkbase. From long-term
           platforms to focused digital launches.
+
         </p>
 
+
         <span class="hero-index">
+
           01 — 06
+
         </span>
 
       </div>
@@ -1055,9 +1336,14 @@
     </section>
 
 
-    <!-- WORK -->
+    <!-- =====================================
+         SELECTED WORK
+    ====================================== -->
 
-    <section class="section" id="work">
+    <section
+      class="section"
+      id="work"
+    >
 
       <div class="section-head">
 
@@ -1073,9 +1359,12 @@
 
         </div>
 
+
         <p class="section-description">
+
           Real websites. Real products. Real businesses.
           Explore the work directly.
+
         </p>
 
       </div>
@@ -1084,7 +1373,7 @@
       <div class="project-list">
 
 
-        <!-- PROJECT 01 -->
+        <!-- 01 -->
 
         <a
           class="project"
@@ -1096,6 +1385,7 @@
           <span class="project-number">
             01
           </span>
+
 
           <div class="project-main">
 
@@ -1109,10 +1399,14 @@
 
           </div>
 
+
           <div class="project-type">
+
             Web Design<br>
             Development
+
           </div>
+
 
           <div class="project-arrow">
 
@@ -1122,7 +1416,9 @@
               stroke="currentColor"
               stroke-width="1.6"
             >
+
               <path d="M5 19L19 5M8 5h11v11"/>
+
             </svg>
 
           </div>
@@ -1130,7 +1426,7 @@
         </a>
 
 
-        <!-- PROJECT 02 -->
+        <!-- 02 -->
 
         <a
           class="project"
@@ -1142,6 +1438,7 @@
           <span class="project-number">
             02
           </span>
+
 
           <div class="project-main">
 
@@ -1155,10 +1452,14 @@
 
           </div>
 
+
           <div class="project-type">
+
             Product Design<br>
             Web Development
+
           </div>
+
 
           <div class="project-arrow">
 
@@ -1168,7 +1469,9 @@
               stroke="currentColor"
               stroke-width="1.6"
             >
+
               <path d="M5 19L19 5M8 5h11v11"/>
+
             </svg>
 
           </div>
@@ -1176,7 +1479,7 @@
         </a>
 
 
-        <!-- PROJECT 03 -->
+        <!-- 03 -->
 
         <a
           class="project"
@@ -1188,6 +1491,7 @@
           <span class="project-number">
             03
           </span>
+
 
           <div class="project-main">
 
@@ -1201,10 +1505,14 @@
 
           </div>
 
+
           <div class="project-type">
+
             Corporate Website<br>
             Conversion Design
+
           </div>
+
 
           <div class="project-arrow">
 
@@ -1214,7 +1522,9 @@
               stroke="currentColor"
               stroke-width="1.6"
             >
+
               <path d="M5 19L19 5M8 5h11v11"/>
+
             </svg>
 
           </div>
@@ -1222,7 +1532,7 @@
         </a>
 
 
-        <!-- PROJECT 04 -->
+        <!-- 04 -->
 
         <a
           class="project"
@@ -1234,6 +1544,7 @@
           <span class="project-number">
             04
           </span>
+
 
           <div class="project-main">
 
@@ -1247,10 +1558,14 @@
 
           </div>
 
+
           <div class="project-type">
+
             Ecommerce<br>
             Luxury UI
+
           </div>
+
 
           <div class="project-arrow">
 
@@ -1260,7 +1575,9 @@
               stroke="currentColor"
               stroke-width="1.6"
             >
+
               <path d="M5 19L19 5M8 5h11v11"/>
+
             </svg>
 
           </div>
@@ -1268,7 +1585,7 @@
         </a>
 
 
-        <!-- PROJECT 05 -->
+        <!-- 05 -->
 
         <a
           class="project"
@@ -1280,6 +1597,7 @@
           <span class="project-number">
             05
           </span>
+
 
           <div class="project-main">
 
@@ -1293,10 +1611,14 @@
 
           </div>
 
+
           <div class="project-type">
+
             Brand Experience<br>
             Digital Product
+
           </div>
+
 
           <div class="project-arrow">
 
@@ -1306,7 +1628,9 @@
               stroke="currentColor"
               stroke-width="1.6"
             >
+
               <path d="M5 19L19 5M8 5h11v11"/>
+
             </svg>
 
           </div>
@@ -1319,9 +1643,14 @@
     </section>
 
 
-    <!-- LONG TERM VENTURES -->
+    <!-- =====================================
+         LONG TERM VENTURES
+    ====================================== -->
 
-    <section class="section" id="ventures">
+    <section
+      class="section"
+      id="ventures"
+    >
 
       <div class="section-head">
 
@@ -1332,15 +1661,21 @@
           </div>
 
           <h2 class="section-title">
+
             Built for<br>
+
             the long run.
+
           </h2>
 
         </div>
 
+
         <p class="section-description">
+
           Ventures where the relationship goes beyond a website.
           Strategy, design, engineering and continuous evolution.
+
         </p>
 
       </div>
@@ -1349,7 +1684,7 @@
       <div class="featured-wrap">
 
 
-        <!-- MAIN VENTURE -->
+        <!-- RUDIMENT -->
 
         <a
           href="https://rudimentinternational.com/"
@@ -1359,26 +1694,40 @@
         >
 
           <div class="featured-label">
+
             Long-term venture
+
           </div>
 
 
           <div class="featured-content">
 
             <h3>
+
               Rudiment<br>
+
               International.
+
             </h3>
 
+
             <p>
+
               A long-term digital presence built around careers,
               education and future opportunities. Designed as an
               evolving platform rather than a one-off website.
+
             </p>
 
+
             <span class="featured-url">
+
               rudimentinternational.com
-              <span>↗</span>
+
+              <span>
+                ↗
+              </span>
+
             </span>
 
           </div>
@@ -1405,6 +1754,7 @@
 
             </div>
 
+
             <span class="ventures-count">
               02 / 03
             </span>
@@ -1415,7 +1765,7 @@
           <div class="venture-list">
 
 
-            <!-- VENTURE 02 -->
+            <!-- TISORA -->
 
             <a
               href="https://www.tisorahbox.com/"
@@ -1449,7 +1799,9 @@
                   stroke="currentColor"
                   stroke-width="1.6"
                 >
+
                   <path d="M5 19L19 5M8 5h11v11"/>
+
                 </svg>
 
               </div>
@@ -1457,7 +1809,7 @@
             </a>
 
 
-            <!-- VENTURE 03 -->
+            <!-- MUZICLUB -->
 
             <a
               href="https://muziclub.com/"
@@ -1491,7 +1843,9 @@
                   stroke="currentColor"
                   stroke-width="1.6"
                 >
+
                   <path d="M5 19L19 5M8 5h11v11"/>
+
                 </svg>
 
               </div>
@@ -1508,7 +1862,9 @@
     </section>
 
 
-    <!-- MANIFESTO -->
+    <!-- =====================================
+         MANIFESTO
+    ====================================== -->
 
     <section class="manifesto">
 
@@ -1534,23 +1890,30 @@
     </section>
 
 
-    <!-- FOOTER -->
+    <!-- =====================================
+         FOOTER
+    ====================================== -->
 
-    <footer class="footer" id="contact">
+    <footer
+      class="footer"
+      id="contact"
+    >
 
       <div class="footer-top">
 
 
         <div class="footer-brand">
 
-          <img
-            src="starkbase-logo.png"
-            alt="Starkbase"
-          >
+          <div class="footer-logo">
+            Starkbase
+          </div>
+
 
           <p>
+
             Digital products, websites and experiences
             built with intention.
+
           </p>
 
         </div>
@@ -1569,7 +1932,6 @@
 
         </a>
 
-
       </div>
 
 
@@ -1586,6 +1948,7 @@
       </div>
 
     </footer>
+
 
   </main>
 
