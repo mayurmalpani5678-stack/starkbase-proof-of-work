@@ -1,0 +1,1593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Starkbase — Selected Work</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link rel="icon" type="image/x-icon" href="starkbase-tab-icon.png">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    :root {
+      --bg: #080808;
+      --surface: #0e0e0e;
+      --surface-2: #121212;
+      --surface-3: #171717;
+
+      --text: #f5f5f0;
+      --muted: #858580;
+      --muted-2: #575752;
+
+      --line: rgba(255,255,255,.10);
+      --line-soft: rgba(255,255,255,.055);
+
+      --accent: #d9ff63;
+      --accent-soft: rgba(217,255,99,.10);
+
+      --radius: 0px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Plus Jakarta Sans", sans-serif;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 50;
+      opacity: .025;
+      background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='.8'/%3E%3C/svg%3E");
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .page {
+      width: min(1440px, calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    /* =========================
+       CUT CORNER
+    ========================= */
+
+    .cut {
+      clip-path: polygon(
+        0 0,
+        calc(100% - 22px) 0,
+        100% 22px,
+        100% 100%,
+        22px 100%,
+        0 calc(100% - 22px)
+      );
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    .topbar {
+      height: 92px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--line-soft);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .brand img {
+      width: 112px;
+      display: block;
+    }
+
+    .brand-mark {
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      transform: rotate(45deg);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      color: var(--muted);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .16em;
+    }
+
+    .nav-right a {
+      transition: color .25s ease;
+    }
+
+    .nav-right a:hover {
+      color: var(--text);
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text);
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent);
+    }
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-bottom: 1px solid var(--line-soft);
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      right: 5%;
+      top: 30%;
+      background: var(--accent-soft);
+      filter: blur(100px);
+      pointer-events: none;
+      opacity: .35;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      margin-bottom: 30px;
+    }
+
+    .eyebrow-line {
+      width: 42px;
+      height: 1px;
+      background: var(--muted-2);
+    }
+
+    .hero h1 {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      font-size: clamp(62px, 9.3vw, 145px);
+      line-height: .84;
+      letter-spacing: -.085em;
+      font-weight: 700;
+    }
+
+    .hero h1 span {
+      color: var(--muted-2);
+    }
+
+    .hero-bottom {
+      position: relative;
+      z-index: 2;
+      margin-top: 58px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 40px;
+    }
+
+    .hero-copy {
+      max-width: 520px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.85;
+    }
+
+    .hero-index {
+      font-family: "Comfortaa", sans-serif;
+      color: var(--muted-2);
+      font-size: 11px;
+      letter-spacing: .15em;
+    }
+
+    /* =========================
+       SECTIONS
+    ========================= */
+
+    .section {
+      padding: 125px 0;
+      border-bottom: 1px solid var(--line-soft);
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 30px;
+      margin-bottom: 58px;
+    }
+
+    .section-kicker {
+      color: var(--accent);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .2em;
+      margin-bottom: 15px;
+    }
+
+    .section-title {
+      font-size: clamp(40px, 5vw, 70px);
+      line-height: .92;
+      letter-spacing: -.065em;
+    }
+
+    .section-description {
+      max-width: 340px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    /* =========================
+       PROJECT LIST
+    ========================= */
+
+    .project-list {
+      border-top: 1px solid var(--line);
+    }
+
+    .project {
+      min-height: 155px;
+      display: grid;
+      grid-template-columns: 70px 1fr 230px 70px;
+      align-items: center;
+      gap: 25px;
+
+      padding: 28px 20px;
+
+      border-bottom: 1px solid var(--line);
+      position: relative;
+      overflow: hidden;
+
+      transition:
+        background .4s ease,
+        padding .4s ease;
+    }
+
+    .project::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--accent);
+
+      transform: scaleY(0);
+      transform-origin: bottom;
+
+      transition: transform .4s ease;
+    }
+
+    .project::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+
+      background:
+        radial-gradient(
+          circle at 80% 50%,
+          rgba(217,255,99,.08),
+          transparent 28%
+        );
+
+      opacity: 0;
+      transition: opacity .4s ease;
+    }
+
+    .project:hover {
+      background: var(--surface);
+      padding-left: 36px;
+    }
+
+    .project:hover::before {
+      transform: scaleY(1);
+    }
+
+    .project:hover::after {
+      opacity: 1;
+    }
+
+    .project-number,
+    .project-main,
+    .project-type,
+    .project-arrow {
+      position: relative;
+      z-index: 2;
+    }
+
+    .project-number {
+      color: var(--muted-2);
+      font-family: "Comfortaa", sans-serif;
+      font-size: 11px;
+    }
+
+    .project-title {
+      font-size: clamp(22px, 3vw, 37px);
+      letter-spacing: -.045em;
+      font-weight: 600;
+      margin-bottom: 8px;
+      transition: transform .35s ease;
+    }
+
+    .project:hover .project-title {
+      transform: translateX(7px);
+    }
+
+    .project-meta {
+      color: var(--muted);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: .15em;
+    }
+
+    .project-type {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.7;
+    }
+
+    .project-arrow {
+      width: 46px;
+      height: 46px;
+
+      display: grid;
+      place-items: center;
+
+      border: 1px solid var(--line);
+
+      transition:
+        background .35s ease,
+        color .35s ease,
+        border-color .35s ease;
+    }
+
+    .project-arrow svg {
+      width: 16px;
+      transition: transform .35s ease;
+    }
+
+    .project:hover .project-arrow {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #080808;
+    }
+
+    .project:hover .project-arrow svg {
+      transform: translate(4px, -4px);
+    }
+
+    /* =========================
+       LONG TERM WORK
+    ========================= */
+
+    .featured-wrap {
+      display: grid;
+      grid-template-columns: 1.4fr .6fr;
+      gap: 18px;
+    }
+
+    /* MAIN FEATURE */
+
+    .featured-main {
+      min-height: 510px;
+      padding: 40px;
+
+      position: relative;
+      overflow: hidden;
+
+      background:
+        radial-gradient(
+          circle at 80% 75%,
+          rgba(217,255,99,.12),
+          transparent 30%
+        ),
+        var(--surface);
+
+      border: 1px solid var(--line);
+    }
+
+    .featured-main::after {
+      content: "01";
+
+      position: absolute;
+      right: -20px;
+      bottom: -75px;
+
+      font-size: 260px;
+      line-height: 1;
+
+      font-weight: 800;
+      letter-spacing: -.1em;
+
+      color: rgba(255,255,255,.025);
+
+      transition:
+        transform .6s ease,
+        color .6s ease;
+    }
+
+    .featured-main:hover::after {
+      transform: translate(-15px,-15px);
+      color: rgba(217,255,99,.04);
+    }
+
+    .featured-label {
+      position: relative;
+      z-index: 2;
+
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+
+      color: var(--accent);
+
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: .18em;
+    }
+
+    .featured-label::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+
+      background: var(--accent);
+      transform: rotate(45deg);
+    }
+
+    .featured-content {
+      position: absolute;
+      left: 40px;
+      right: 40px;
+      bottom: 40px;
+      z-index: 3;
+    }
+
+    .featured-content h3 {
+      font-size: clamp(43px, 5.4vw, 76px);
+      line-height: .88;
+      letter-spacing: -.075em;
+      margin-bottom: 23px;
+    }
+
+    .featured-content p {
+      max-width: 580px;
+
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .featured-url {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+
+      margin-top: 28px;
+      padding-bottom: 9px;
+
+      border-bottom: 1px solid var(--line);
+
+      font-family: "Comfortaa", sans-serif;
+      font-size: 10px;
+
+      transition:
+        border-color .3s ease,
+        color .3s ease;
+    }
+
+    .featured-url:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* =========================
+       MORE VENTURES CARD
+    ========================= */
+
+    .ventures-card {
+      min-height: 510px;
+      position: relative;
+      overflow: hidden;
+
+      background: #0b0b0b;
+
+      border: 1px solid var(--line);
+
+      display: flex;
+      flex-direction: column;
+
+      transition:
+        background .4s ease,
+        border-color .4s ease;
+    }
+
+    .ventures-card::before {
+      content: "";
+
+      position: absolute;
+      width: 260px;
+      height: 260px;
+
+      right: -130px;
+      top: -130px;
+
+      border-radius: 50%;
+
+      border: 1px solid rgba(217,255,99,.13);
+
+      transition: transform .6s ease;
+    }
+
+    .ventures-card:hover::before {
+      transform: scale(1.25);
+    }
+
+    .ventures-card::after {
+      content: "02";
+
+      position: absolute;
+
+      right: -10px;
+      bottom: -65px;
+
+      font-size: 230px;
+      line-height: 1;
+
+      font-weight: 800;
+      letter-spacing: -.1em;
+
+      color: rgba(255,255,255,.025);
+
+      pointer-events: none;
+    }
+
+    .ventures-top {
+      padding: 30px 30px 0;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      position: relative;
+      z-index: 3;
+    }
+
+    .ventures-title {
+      font-size: 18px;
+      letter-spacing: -.035em;
+    }
+
+    .ventures-count {
+      color: var(--muted-2);
+
+      font-family: "Comfortaa", sans-serif;
+      font-size: 9px;
+      letter-spacing: .15em;
+    }
+
+    /* VENTURE ITEMS */
+
+    .venture-list {
+      margin-top: auto;
+      position: relative;
+      z-index: 3;
+    }
+
+    .venture {
+      min-height: 126px;
+
+      padding: 23px 30px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      border-top: 1px solid var(--line);
+
+      position: relative;
+      overflow: hidden;
+
+      transition:
+        background .35s ease,
+        padding .35s ease;
+    }
+
+    .venture::before {
+      content: "";
+
+      position: absolute;
+      inset: 0;
+
+      background:
+        linear-gradient(
+          90deg,
+          rgba(217,255,99,.08),
+          transparent 75%
+        );
+
+      transform: translateX(-100%);
+
+      transition: transform .45s ease;
+    }
+
+    .venture:hover {
+      background: var(--surface-2);
+      padding-left: 38px;
+    }
+
+    .venture:hover::before {
+      transform: translateX(0);
+    }
+
+    .venture-left {
+      position: relative;
+      z-index: 2;
+    }
+
+    .venture-number {
+      color: var(--muted-2);
+
+      font-family: "Comfortaa", sans-serif;
+      font-size: 9px;
+
+      margin-bottom: 9px;
+    }
+
+    .venture-name {
+      font-size: 20px;
+      letter-spacing: -.045em;
+      font-weight: 600;
+
+      transition: transform .35s ease;
+    }
+
+    .venture:hover .venture-name {
+      transform: translateX(4px);
+    }
+
+    .venture-category {
+      margin-top: 7px;
+
+      color: var(--muted);
+
+      font-size: 8px;
+      text-transform: uppercase;
+      letter-spacing: .15em;
+    }
+
+    .venture-arrow {
+      position: relative;
+      z-index: 2;
+
+      width: 39px;
+      height: 39px;
+
+      display: grid;
+      place-items: center;
+
+      border: 1px solid var(--line);
+
+      color: var(--muted);
+
+      transition:
+        background .3s ease,
+        color .3s ease,
+        border-color .3s ease;
+    }
+
+    .venture-arrow svg {
+      width: 14px;
+      transition: transform .3s ease;
+    }
+
+    .venture:hover .venture-arrow {
+      background: var(--accent);
+      color: #080808;
+      border-color: var(--accent);
+    }
+
+    .venture:hover .venture-arrow svg {
+      transform: translate(3px,-3px);
+    }
+
+    /* =========================
+       MANIFESTO
+    ========================= */
+
+    .manifesto {
+      min-height: 540px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .manifesto h2 {
+      max-width: 1150px;
+
+      font-size: clamp(43px, 6vw, 88px);
+      line-height: .94;
+      letter-spacing: -.07em;
+    }
+
+    .manifesto h2 em {
+      font-family: "Comfortaa", sans-serif;
+      font-style: normal;
+      font-weight: 500;
+      color: var(--accent);
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    .footer {
+      padding: 65px 0 45px;
+    }
+
+    .footer-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    .footer-brand img {
+      width: 125px;
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    .footer-brand p {
+      max-width: 280px;
+
+      color: var(--muted);
+
+      font-size: 11px;
+      line-height: 1.8;
+    }
+
+    .footer-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+
+      padding: 14px 18px;
+
+      border: 1px solid var(--line);
+
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: .15em;
+
+      transition:
+        background .3s ease,
+        border-color .3s ease,
+        color .3s ease;
+    }
+
+    .footer-link:hover {
+      background: var(--accent);
+      color: #080808;
+      border-color: var(--accent);
+    }
+
+    .footer-bottom {
+      margin-top: 80px;
+
+      padding-top: 20px;
+
+      border-top: 1px solid var(--line-soft);
+
+      display: flex;
+      justify-content: space-between;
+
+      color: var(--muted-2);
+
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: .15em;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 900px) {
+
+      .page {
+        width: min(100% - 30px, 1440px);
+      }
+
+      .nav-right a:not(.status) {
+        display: none;
+      }
+
+      .hero {
+        min-height: 520px;
+      }
+
+      .hero-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .section {
+        padding: 90px 0;
+      }
+
+      .section-head {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .project {
+        grid-template-columns: 45px 1fr 50px;
+        min-height: 130px;
+        gap: 12px;
+      }
+
+      .project-type {
+        display: none;
+      }
+
+      .project:hover {
+        padding-left: 27px;
+      }
+
+      .featured-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .featured-main,
+      .ventures-card {
+        min-height: 470px;
+      }
+    }
+
+    @media (max-width: 560px) {
+
+      .topbar {
+        height: 76px;
+      }
+
+      .brand img {
+        width: 95px;
+      }
+
+      .hero h1 {
+        font-size: 57px;
+      }
+
+      .hero {
+        min-height: 490px;
+      }
+
+      .project {
+        padding: 23px 10px;
+      }
+
+      .project-title {
+        font-size: 21px;
+      }
+
+      .project:hover {
+        padding-left: 19px;
+      }
+
+      .project-arrow {
+        width: 40px;
+        height: 40px;
+      }
+
+      .featured-main {
+        min-height: 450px;
+        padding: 27px;
+      }
+
+      .featured-content {
+        left: 27px;
+        right: 27px;
+        bottom: 28px;
+      }
+
+      .featured-content h3 {
+        font-size: 44px;
+      }
+
+      .ventures-card {
+        min-height: 440px;
+      }
+
+      .ventures-top {
+        padding: 25px 22px 0;
+      }
+
+      .venture {
+        padding: 21px 22px;
+        min-height: 115px;
+      }
+
+      .venture:hover {
+        padding-left: 28px;
+      }
+
+      .venture-name {
+        font-size: 18px;
+      }
+
+      .manifesto {
+        min-height: 430px;
+      }
+
+      .footer-top {
+        flex-direction: column;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 12px;
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+
+  <main class="page">
+
+    <!-- HEADER -->
+
+    <header class="topbar">
+
+      <a href="#" class="brand">
+        <img src="starkbase-logo.png" alt="Starkbase">
+        <span class="brand-mark"></span>
+      </a>
+
+      <nav class="nav-right">
+
+        <a href="#work">Work</a>
+
+        <a href="#ventures">Ventures</a>
+
+        <a href="#contact">Contact</a>
+
+        <span class="status">
+          <span class="status-dot"></span>
+          Available
+        </span>
+
+      </nav>
+
+    </header>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+      <div class="eyebrow">
+        <span class="eyebrow-line"></span>
+        Starkbase / Selected Work
+      </div>
+
+      <h1>
+        Proof of <span>work.</span><br>
+        Built to matter.
+      </h1>
+
+      <div class="hero-bottom">
+
+        <p class="hero-copy">
+          A selection of digital products, ventures and experiences
+          designed and engineered by Starkbase. From long-term
+          platforms to focused digital launches.
+        </p>
+
+        <span class="hero-index">
+          01 — 06
+        </span>
+
+      </div>
+
+    </section>
+
+
+    <!-- WORK -->
+
+    <section class="section" id="work">
+
+      <div class="section-head">
+
+        <div>
+
+          <div class="section-kicker">
+            Selected projects
+          </div>
+
+          <h2 class="section-title">
+            Built in public.
+          </h2>
+
+        </div>
+
+        <p class="section-description">
+          Real websites. Real products. Real businesses.
+          Explore the work directly.
+        </p>
+
+      </div>
+
+
+      <div class="project-list">
+
+
+        <!-- PROJECT 01 -->
+
+        <a
+          class="project"
+          href="https://www.tisorahbox.com/"
+          target="_blank"
+          rel="noopener"
+        >
+
+          <span class="project-number">
+            01
+          </span>
+
+          <div class="project-main">
+
+            <h3 class="project-title">
+              Tisora HBox
+            </h3>
+
+            <div class="project-meta">
+              Digital Experience
+            </div>
+
+          </div>
+
+          <div class="project-type">
+            Web Design<br>
+            Development
+          </div>
+
+          <div class="project-arrow">
+
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+            >
+              <path d="M5 19L19 5M8 5h11v11"/>
+            </svg>
+
+          </div>
+
+        </a>
+
+
+        <!-- PROJECT 02 -->
+
+        <a
+          class="project"
+          href="https://muziclub.com/"
+          target="_blank"
+          rel="noopener"
+        >
+
+          <span class="project-number">
+            02
+          </span>
+
+          <div class="project-main">
+
+            <h3 class="project-title">
+              Muziclub
+            </h3>
+
+            <div class="project-meta">
+              Music Platform
+            </div>
+
+          </div>
+
+          <div class="project-type">
+            Product Design<br>
+            Web Development
+          </div>
+
+          <div class="project-arrow">
+
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+            >
+              <path d="M5 19L19 5M8 5h11v11"/>
+            </svg>
+
+          </div>
+
+        </a>
+
+
+        <!-- PROJECT 03 -->
+
+        <a
+          class="project"
+          href="https://www.meltechmeltingtechnology.in/"
+          target="_blank"
+          rel="noopener"
+        >
+
+          <span class="project-number">
+            03
+          </span>
+
+          <div class="project-main">
+
+            <h3 class="project-title">
+              Meltech Melting Technology
+            </h3>
+
+            <div class="project-meta">
+              Industrial / B2B
+            </div>
+
+          </div>
+
+          <div class="project-type">
+            Corporate Website<br>
+            Conversion Design
+          </div>
+
+          <div class="project-arrow">
+
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+            >
+              <path d="M5 19L19 5M8 5h11v11"/>
+            </svg>
+
+          </div>
+
+        </a>
+
+
+        <!-- PROJECT 04 -->
+
+        <a
+          class="project"
+          href="https://adaari.vercel.app/"
+          target="_blank"
+          rel="noopener"
+        >
+
+          <span class="project-number">
+            04
+          </span>
+
+          <div class="project-main">
+
+            <h3 class="project-title">
+              House of AdaaRi
+            </h3>
+
+            <div class="project-meta">
+              Luxury Commerce
+            </div>
+
+          </div>
+
+          <div class="project-type">
+            Ecommerce<br>
+            Luxury UI
+          </div>
+
+          <div class="project-arrow">
+
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+            >
+              <path d="M5 19L19 5M8 5h11v11"/>
+            </svg>
+
+          </div>
+
+        </a>
+
+
+        <!-- PROJECT 05 -->
+
+        <a
+          class="project"
+          href="https://forge-cafe-demo-rqvc.vercel.app/"
+          target="_blank"
+          rel="noopener"
+        >
+
+          <span class="project-number">
+            05
+          </span>
+
+          <div class="project-main">
+
+            <h3 class="project-title">
+              Forge Cafe
+            </h3>
+
+            <div class="project-meta">
+              Hospitality / Brand
+            </div>
+
+          </div>
+
+          <div class="project-type">
+            Brand Experience<br>
+            Digital Product
+          </div>
+
+          <div class="project-arrow">
+
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+            >
+              <path d="M5 19L19 5M8 5h11v11"/>
+            </svg>
+
+          </div>
+
+        </a>
+
+
+      </div>
+
+    </section>
+
+
+    <!-- LONG TERM VENTURES -->
+
+    <section class="section" id="ventures">
+
+      <div class="section-head">
+
+        <div>
+
+          <div class="section-kicker">
+            Long-term work
+          </div>
+
+          <h2 class="section-title">
+            Built for<br>
+            the long run.
+          </h2>
+
+        </div>
+
+        <p class="section-description">
+          Ventures where the relationship goes beyond a website.
+          Strategy, design, engineering and continuous evolution.
+        </p>
+
+      </div>
+
+
+      <div class="featured-wrap">
+
+
+        <!-- MAIN VENTURE -->
+
+        <a
+          href="https://rudimentinternational.com/"
+          target="_blank"
+          rel="noopener"
+          class="featured-main cut"
+        >
+
+          <div class="featured-label">
+            Long-term venture
+          </div>
+
+
+          <div class="featured-content">
+
+            <h3>
+              Rudiment<br>
+              International.
+            </h3>
+
+            <p>
+              A long-term digital presence built around careers,
+              education and future opportunities. Designed as an
+              evolving platform rather than a one-off website.
+            </p>
+
+            <span class="featured-url">
+              rudimentinternational.com
+              <span>↗</span>
+            </span>
+
+          </div>
+
+        </a>
+
+
+        <!-- MORE VENTURES -->
+
+        <div class="ventures-card cut">
+
+
+          <div class="ventures-top">
+
+            <div>
+
+              <div class="section-kicker">
+                Portfolio
+              </div>
+
+              <h3 class="ventures-title">
+                More ventures
+              </h3>
+
+            </div>
+
+            <span class="ventures-count">
+              02 / 03
+            </span>
+
+          </div>
+
+
+          <div class="venture-list">
+
+
+            <!-- VENTURE 02 -->
+
+            <a
+              href="https://www.tisorahbox.com/"
+              target="_blank"
+              rel="noopener"
+              class="venture"
+            >
+
+              <div class="venture-left">
+
+                <div class="venture-number">
+                  02
+                </div>
+
+                <div class="venture-name">
+                  Tisora HBox
+                </div>
+
+                <div class="venture-category">
+                  Digital Commerce
+                </div>
+
+              </div>
+
+
+              <div class="venture-arrow">
+
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                >
+                  <path d="M5 19L19 5M8 5h11v11"/>
+                </svg>
+
+              </div>
+
+            </a>
+
+
+            <!-- VENTURE 03 -->
+
+            <a
+              href="https://muziclub.com/"
+              target="_blank"
+              rel="noopener"
+              class="venture"
+            >
+
+              <div class="venture-left">
+
+                <div class="venture-number">
+                  03
+                </div>
+
+                <div class="venture-name">
+                  Muziclub
+                </div>
+
+                <div class="venture-category">
+                  Music Platform
+                </div>
+
+              </div>
+
+
+              <div class="venture-arrow">
+
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                >
+                  <path d="M5 19L19 5M8 5h11v11"/>
+                </svg>
+
+              </div>
+
+            </a>
+
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- MANIFESTO -->
+
+    <section class="manifesto">
+
+      <div class="eyebrow">
+
+        <span class="eyebrow-line"></span>
+
+        Starkbase
+
+      </div>
+
+
+      <h2>
+
+        Not just another website.
+
+        <em>
+          A digital presence people remember.
+        </em>
+
+      </h2>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer class="footer" id="contact">
+
+      <div class="footer-top">
+
+
+        <div class="footer-brand">
+
+          <img
+            src="starkbase-logo.png"
+            alt="Starkbase"
+          >
+
+          <p>
+            Digital products, websites and experiences
+            built with intention.
+          </p>
+
+        </div>
+
+
+        <a
+          href="mailto:hello@starkbase.com"
+          class="footer-link"
+        >
+
+          Start a project
+
+          <span>
+            ↗
+          </span>
+
+        </a>
+
+
+      </div>
+
+
+      <div class="footer-bottom">
+
+        <span>
+          © 2026 Starkbase
+        </span>
+
+        <span>
+          Selected work / 2026
+        </span>
+
+      </div>
+
+    </footer>
+
+  </main>
+
+</body>
+</html>
